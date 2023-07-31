@@ -1,7 +1,7 @@
 import { writable, derived } from 'svelte/store';
 
 export const currentPage = writable(1);
-export const pageSize = writable(5);
+export const pageSize = writable(15);
 export const totalItems = writable(0);
 export const totalPages = derived([totalItems, pageSize], ([$totalItems, $pageSize]) =>
 	Math.ceil($totalItems / $pageSize)

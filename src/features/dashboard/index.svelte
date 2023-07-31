@@ -35,7 +35,6 @@
 				getDeptTotalStaff()
 			]);
 			const { totalStaff, activeStaff, onLeave, gender } = empRes.data[0];
-			console.log(gender);
 			events = eventsRes.data.map((x) => ({
 				title: x.title,
 				startDate: x.startDate,
@@ -94,7 +93,7 @@
 						<GenderShare chartData={genderShare} />
 					</div>
 				</Box>
-				<Box otherClasses="p-8">
+				<Box otherClasses="p-8 mb-28 md:mb-0">
 					<p class="text-lg font-medium mb-4">Upcoming Events</p>
 					<UpcomingEvents activities={events} />
 				</Box>

@@ -30,7 +30,7 @@
 		</div>
 		<div class="flex-grow flex flex-col w-full">
 			<NavBar {menus} />
-			<div class=" h-full p-6">
+			<div class=" h-full py-6 px-2 md:px-6">
 				<div class="flex justify-between items-center mb-5 border-b pb-1">
 					<div class="flex items-center gap-1">
 						<Icon icon={page.icon} class={page.iconColor} style="font-size: larger;" />
@@ -49,7 +49,7 @@
 						{#if page.buttons}
 							{#each page.buttons as btn}
 								<button
-									class="flex items-center justify-center gap-1.5 hover:bg-gray-100 rounded-[5px] px-2 py-1.5"
+									class="flex items-center justify-center gap-1.5 hover:bg-blue-300 rounded-[5px] px-2 py-1.5 bg-blue-200 "
 									on:click={btn.onClick}
 								>
 									{#if btn.icon}
@@ -58,7 +58,7 @@
 											class="{btn.iconColor} rounded-full text-lg bg-gray-100"
 										/>
 									{/if}
-									<span class="text-xs font-semibold text-gray-600">{btn.label}</span>
+									<span class=" text-gray-600 font-medium text-sm">{btn.label}</span>
 								</button>
 							{/each}
 						{/if}

@@ -8,12 +8,20 @@
 
 <script lang="ts">
 	import dayjs from 'dayjs';
+	import { send, receive } from '../lib/helpers';
+	import { flip } from 'svelte/animate';
+
 	export let activities: IActivity[] = [];
 </script>
 
 {#if activities.length}
-	{#each activities as { title, startDate, startTime }}
-		<div class="relative flex pb-2 mb-1 items-top ">
+	{#each activities as { title, startDate, startTime } (title)}
+		<div
+			class="relative flex pb-2 mb-1 items-top"
+			in:receive={{ key: title }}
+			out:send={{ key: title }}
+			animate:flip
+		>
 			<div
 				class="border border-r rtl:border-l rtl:right-2 rtl:left-0 rtl:mr-0.5 ml-0.5 bg-secondary-100 h-full w-px absolute dark:border-secondary-600 left-2 top-3 z-10"
 				aria-hidden="true"
@@ -28,7 +36,9 @@
 						>{dayjs(startDate).format('ddd MMMM DD, YYYY') ?? ''}</span
 					>
 				</h6>
-				<span class="mb-0 text-base text-gray-600">{dayjs(startTime).format('hh : mm A') ?? ''}</span>
+				<span class="mb-0 text-base text-gray-600"
+					>{dayjs(startTime).format('hh : mm A') ?? ''}</span
+				>
 			</div>
 		</div>
 	{/each}

@@ -13,6 +13,8 @@ export interface IEmployee {
 	dob: Date;
 	IdNumber: string;
 	staffId: string;
+	email: string;
+	contact: string;
 }
 
 function generateRandomEmployeeData(): IEmployee {
@@ -34,11 +36,13 @@ function generateRandomEmployeeData(): IEmployee {
 		Math.floor(Math.random() * 28)
 	); // Random date of birth
 	const randomIdNumber = Math.random().toString(36).substring(7);
-	const randomStaffId = `StaffID${Math.floor(Math.random() * 10000)}`;
+	const randomStaffId = `DemoApp${Math.floor(Math.random() * 10000)}`;
+	const randomEmail = `employee${Math.floor(Math.random() * 100)}@example.com`;
+	const randomContact = `+1${Math.floor(Math.random() * 1000000000)}`;
 
 	const employee: IEmployee = {
 		id: randomId,
-		fullname: `${randomFirstName} ${randomSurname}`,
+		fullname: `${randomFirstName} ${randomSurname} ${randomOtherNames ?? ''}`,
 		firstname: randomFirstName,
 		surname: randomSurname,
 		othernames: randomOtherNames,
@@ -50,7 +54,9 @@ function generateRandomEmployeeData(): IEmployee {
 		onLeave: randomOnLeave,
 		dob: randomDOB,
 		IdNumber: randomIdNumber,
-		staffId: randomStaffId
+		staffId: randomStaffId,
+		email: randomEmail,
+		contact: randomContact
 	};
 
 	return employee;
@@ -85,5 +91,40 @@ export function staffDashBoardData(): Promise<{
 				]
 			});
 		}, 1000);
+	});
+}
+
+export function getAllEmployees(
+	page: number,
+	pageSize: number,
+	searchQuery?: string
+): Promise<{
+	success: boolean;
+	message: string;
+	data: { data: IEmployee[]; totalCount: number };
+}> {
+	return new Promise((resolve) => {
+		let data = employees;
+
+		if (searchQuery) {
+			data = employees.filter(
+				(person) =>
+					person.fullname.toLowerCase().includes(searchQuery.toLowerCase()) ||
+					person.staffId.toLowerCase().includes(searchQuery.toLowerCase())
+				// person..toLowerCase().includes(searchQuery.toLowerCase())
+			);
+		}
+
+		const totalCount = employees.length;
+		const startIndex = (page - 1) * pageSize;
+		const endIndex = startIndex + pageSize;
+
+		const paginatedData = data.slice(startIndex, endIndex);
+
+		resolve({
+			success: true,
+			message: 'Success',
+			data: { data: paginatedData, totalCount: totalCount }
+		});
 	});
 }

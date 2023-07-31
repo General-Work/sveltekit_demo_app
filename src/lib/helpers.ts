@@ -1,3 +1,24 @@
+import { quintOut } from 'svelte/easing';
+import { crossfade } from 'svelte/transition';
+
+export const [send, receive] = crossfade({
+	duration: (d) => Math.sqrt(d * 200),
+
+	fallback(node, params) {
+		const style = getComputedStyle(node);
+		const transform = style.transform === 'none' ? '' : style.transform;
+
+		return {
+			duration: 600,
+			easing: quintOut,
+			css: (t) => `
+        transform: ${transform} scale(${t});
+        opacity: ${t}
+      `
+		};
+	}
+});
+
 export const sideBarMenus = [
 	{
 		label: 'Dashboard',
@@ -15,15 +36,12 @@ export const sideBarMenus = [
 		label: 'Setups',
 		icon: 'solar:settings-bold',
 		iconColor: 'text-[#E1601F]',
-    child: [
-      {label: 'Departments'}
-    ]
+		child: [{ label: 'Departments' }]
 	},
 	{
 		label: 'Admin',
 		path: '/private/admin',
 		icon: 'clarity:administrator-solid',
-		iconColor: 'text-[#E1601F]',
-  
+		iconColor: 'text-[#E1601F]'
 	}
 ];

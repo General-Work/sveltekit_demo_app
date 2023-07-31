@@ -28,5 +28,10 @@
 
 <Box>
 	<p class="text-xl font-medium px-6 pt-8">Department Distribution</p>
-	<Echart {options} height={500} width={900} />
+	<div class="hidden md:block">
+		<Echart {options} height={500} width={900} />
+	</div>
+	<div class="md:hidden">
+		<Echart {options} height={500} width={400} />
+	</div>
 </Box>
